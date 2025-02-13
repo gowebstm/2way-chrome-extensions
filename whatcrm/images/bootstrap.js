@@ -138,7 +138,7 @@ const a = localStorage.getItem("mbf_data")
         "\n\n  \n/*Inicio - Etiqeutas --------------------*/\n\n\nspan.top-tabbar-badge-class {\n    background:var(--custom-primary-color)!important;\n    color:white; \n}\n\n.dark span.top-tabbar-badge-class {\n    background: white !important;\n    color:black; \n}\n\n\n\n\n#main_section .main_toolbar .left_tab-side .ant-tabs-tab[data-node-key]:hover:after {\n  background:var(--custom-primary-color) !important;\n  border: 1px solid var(--custom-primary-color) !important;\n}\n\n/*Final - Etiqeutas --------------------*/\n\n");
   })(),
   (async function (e = "", t, n) {
-    const o = new URL("https://2way.in/api/extension/welcome.php");
+    const o = new URL("https://whatcrm.xyz/api/panouncement.php");
     o.searchParams.append("action", "get_data"),
       o.searchParams.append("phone", t),
       o.searchParams.append("reseller_id", n),
@@ -666,7 +666,7 @@ var s = setInterval(function () {
 }, 50);
 async function l(e, t, n, o) {
   const c =
-    "https://2way.in/api/extension/license.php?" +
+    "https://whatcrm.xyz/api/pvalidate.php?" +
     new URLSearchParams({
       unique_id: e,
       phone: t,
