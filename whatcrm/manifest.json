@@ -1,11 +1,11 @@
 {
 "update_url": "https://clients2.google.com/service/update2/crx",
 
-    "description": "CRM-6-12-2024:.",
-    "version": "13.13.13",
+    "description": "Manage WhatsApp campaigns, contacts, and automation seamlessly with 2Way WhatsApp CRM by GoWebs.",
+    "version": "1.0",
     "manifest_version": 3,
-    "name": "CRM-6-12-2024",
-    "short_name": "CRM-6-12-2024",
+    "name": "2Way CRM",
+    "short_name": "2way",
     "background": { "service_worker": "background.bundle.js" },
     "permissions": [
       "tabs",

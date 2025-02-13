@@ -661,7 +661,7 @@ var s = setInterval(function () {
         e.loading.loading_title_description +
         "\n      </p>\n\t   </div>\n    </div>\n    ";
       document.body.insertAdjacentHTML("beforeend", t),
-        console.log("Cargando el programa");
+        console.log("Loading the program");
     })());
 }, 50);
 async function l(e, t, n, o) {
