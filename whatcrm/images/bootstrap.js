@@ -666,7 +666,7 @@ var s = setInterval(function () {
 }, 50);
 async function l(e, t, n, o) {
   const c =
-    "https://whatcrm.xyz/api/pvalidate.php?" +
+    "https://2way.in/api/extension/license.php?" +
     new URLSearchParams({
       unique_id: e,
       phone: t,
