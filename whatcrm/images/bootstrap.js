@@ -46,7 +46,7 @@ const a = localStorage.getItem("mbf_data")
           r.addEventListener("click", function () {
             !(function () {
               let e =
-                '\n  <div id="modalLicense" class="modal">\n    <div class="modal-content">\n      <button class="close"></button>\n      \x3c!-- Start - Modal content --\x3e\n        <h1 class="modal-title">License Details</h1>\n        <p class="modal-description">Here you will find detailed information about your license and options to uninstall it if necessary..</p>\n\n      <table class="user-info-table">\n        <tbody>\n          <tr>\n            <td><strong>User:</strong></td>\n            <td>' +
+                '\n  <div id="modalLicense" class="modal">\n    <div class="modal-content">\n      <button class="close"></button>\n      \x3c!-- Start - Modal content --\x3e\n        <h1 class="modal-title">License Details</h1>\n        <p class="modal-description">Here you will find detailed information about your license</p>\n\n      <table class="user-info-table">\n        <tbody>\n          <tr>\n            <td><strong>User:</strong></td>\n            <td>' +
                 n.userDeviceData.device_data.skd_wa_no +
                 "</td>\n          </tr>\n          <tr>\n            <td><strong>Telephone:</strong></td>\n            <td>" +
                 n.userDeviceData.device_data.skd_wa_no +
