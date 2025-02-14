@@ -671,7 +671,7 @@ async function l(e, t, n, o) {
       unique_id: e,
       phone: t,
       license: n,
-      reseller_id: o,
+      // reseller_id: o,
     }).toString();
   try {
     console.log(c);
