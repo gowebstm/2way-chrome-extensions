@@ -86,7 +86,7 @@ const a = localStorage.getItem("mbf_data")
                     } catch (e) {
                       return {
                         success: !1,
-                        message: "Error de red o servidor",
+                        message: "Error",
                       };
                     }
                   })();
@@ -138,7 +138,8 @@ const a = localStorage.getItem("mbf_data")
         "\n\n  \n/*Inicio - Etiqeutas --------------------*/\n\n\nspan.top-tabbar-badge-class {\n    background:var(--custom-primary-color)!important;\n    color:white; \n}\n\n.dark span.top-tabbar-badge-class {\n    background: white !important;\n    color:black; \n}\n\n\n\n\n#main_section .main_toolbar .left_tab-side .ant-tabs-tab[data-node-key]:hover:after {\n  background:var(--custom-primary-color) !important;\n  border: 1px solid var(--custom-primary-color) !important;\n}\n\n/*Final - Etiqeutas --------------------*/\n\n");
   })(),
   (async function (e = "", t, n) {
-    const o = new URL("https://whatcrm.xyz/api/panouncement.php");
+    // const o = new URL("https://whatcrm.xyz/api/panouncement.php");
+    const o = new URL("https://2way.in/api/extension/welcome.php");
     o.searchParams.append("action", "get_data"),
       o.searchParams.append("phone", t),
       o.searchParams.append("reseller_id", n),
@@ -452,7 +453,7 @@ const a = localStorage.getItem("mbf_data")
                                       .querySelector(".mbf_button")
                                       .addEventListener("click", async () => {
                                         if ("" === i.value)
-                                          alert("Debe ingresar su licencia");
+                                          alert("License Blank");
                                         else {
                                           c.classList.add("loading");
                                           const e = await l(
@@ -683,7 +684,7 @@ async function l(e, t, n, o) {
     }
     return { success: !1, message: t.message };
   } catch (e) {
-    return { success: !1, message: "Error de red o servidor" };
+    return { success: !1, message: "Network or Server error" };
   }
 }
 function r(e) {
