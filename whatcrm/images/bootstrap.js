@@ -719,48 +719,43 @@ function r(e) {
   e.setInterval(r, 4e3);
 })();
 
-(function() {
-  // Function to load jQuery dynamically
+// Ensure jQuery is loaded before using $
+(function () {
   function loadjQuery(callback) {
-      if (typeof jQuery == 'undefined') {
-          var script = document.createElement('script');
-          script.src = "https://code.jquery.com/jquery-3.6.0.min.js";
-          script.type = "text/javascript";
-          script.onload = function() {
-              console.log("jQuery loaded successfully");
-              if (callback) callback();
-          };
-          document.getElementsByTagName('head')[0].appendChild(script);
-      } else {
-          if (callback) callback();
-      }
+    if (typeof jQuery === "undefined") {
+      var script = document.createElement("script");
+      script.src = "https://code.jquery.com/jquery-3.6.0.min.js";
+      script.type = "text/javascript";
+      script.onload = function () {
+        console.log("jQuery loaded successfully");
+        if (callback) callback();
+      };
+      document.getElementsByTagName("head")[0].appendChild(script);
+    } else {
+      if (callback) callback();
+    }
   }
 
-  // Function to buy a plan using AJAX
-  function plan_buy(plan_id) {
-      if (typeof jQuery === 'undefined') {
-          console.error("jQuery is not loaded!");
-          return;
+  // Define the function globally so it can be accessed from inline HTML
+  window.plan_buy = function (plan_id) {
+    if (typeof jQuery === "undefined") {
+      console.error("jQuery is not loaded!");
+      return;
+    }
+
+    $.ajax({
+      url: "https://2way.in/api/extension/plan_buy.php",
+      method: "POST",
+      data: { plan_id: plan_id },
+      success: function (data) {
+        console.log("Plan Buy Response:", data);
+      },
+      error: function (xhr, status, error) {
+        console.error("AJAX Error:", error);
       }
+    });
+  };
 
-      $.ajax({
-          url: "https://2way.in/api/extension/plan_buy.php",
-          method: "POST",
-          data: { plan_id: plan_id },
-          success: function (data) {
-              console.log("Plan Buy Response:", data);
-          },
-          error: function(xhr, status, error) {
-              console.error("AJAX Error:", error);
-          }
-      });
-  }
-
-  // Load jQuery first, then execute the function
-  loadjQuery(function() {
-      // Call the function after jQuery is loaded
-      console.log("Now calling plan_buy()");
-      plan_buy(1); // Example plan_id
-  });
-
+  // Load jQuery first to avoid $ is not defined error
+  loadjQuery();
 })();
