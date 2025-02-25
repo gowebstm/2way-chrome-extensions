@@ -301,8 +301,8 @@ const a = localStorage.getItem("mbf_data")
                                     : "") +
                                   '\n                        </div>\n                        <div class="subscription_content">\n                           <ul class="subscription_feature">\n                              ' +
                                   e.features.join("") +
-                                  '\n                          </ul>\n                          <div class="subscription_price">\n                            <span class="subscription_price_old">*</span>\n                            <span class="subscription_price_current">*</span>\n                          </div>\n                        </div>\n                         <div class="subscription_footer">\n                             <a class="mbf_button" onclick="' +
-                                  plan_buy(e.id) +
+                                  '\n                          </ul>\n                          <div class="subscription_price">\n                            <span class="subscription_price_old">*</span>\n                            <span class="subscription_price_current">*</span>\n                          </div>\n                        </div>\n                         <div class="subscription_footer">\n                             <a class="mbf_button" data-plan-id="' +
+                                  e.id +
                                   '" target="_blank">buy</a>\n                        </div>\n \n                    </li>'
                               ) +
                               '\n         </ul>\n        <button class="carousel-btn right-btn">→</button>\n</div>\n\n    \x3c!-- End - Modal content --\x3e\n  </div>\n</div>\n ';
@@ -719,43 +719,37 @@ function r(e) {
   e.setInterval(r, 4e3);
 })();
 
-// Ensure jQuery is loaded before using $
-(function () {
-  function loadjQuery(callback) {
-    if (typeof jQuery === "undefined") {
-      var script = document.createElement("script");
-      script.src = "https://code.jquery.com/jquery-3.6.0.min.js";
-      script.type = "text/javascript";
-      script.onload = function () {
-        console.log("jQuery loaded successfully");
-        if (callback) callback();
-      };
-      document.getElementsByTagName("head")[0].appendChild(script);
-    } else {
-      if (callback) callback();
-    }
-  }
 
-  // Define the function globally so it can be accessed from inline HTML
-  window.plan_buy = function (plan_id) {
-    if (typeof jQuery === "undefined") {
-      console.error("jQuery is not loaded!");
-      return;
-    }
-
-    $.ajax({
-      url: "https://2way.in/api/extension/plan_buy.php",
-      method: "POST",
-      data: { plan_id: plan_id },
-      success: function (data) {
-        console.log("Plan Buy Response:", data);
-      },
-      error: function (xhr, status, error) {
-        console.error("AJAX Error:", error);
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".mbf_button").forEach(button => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevents unwanted navigation
+      let planId = this.getAttribute("data-plan-id"); // Get Plan ID
+      if (planId) {
+        plan_buy(planId);
+      } else {
+        console.error("❌ Plan ID is missing.");
       }
     });
-  };
+  });
+});
 
-  // Load jQuery first to avoid $ is not defined error
-  loadjQuery();
-})();
+function plan_buy(plan_id) {
+  fetch("https://2way.in/api/extension/plan_buy.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ plan_id: plan_id }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log("✅ Plan Buy Response:", data);
+      alert("Plan purchase successful!");
+    })
+    .catch(error => {
+      console.error("❌ AJAX Error:", error);
+      alert("Error purchasing plan. Please try again.");
+    });
+}
+
