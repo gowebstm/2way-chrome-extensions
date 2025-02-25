@@ -301,9 +301,9 @@ const a = localStorage.getItem("mbf_data")
                                     : "") +
                                   '\n                        </div>\n                        <div class="subscription_content">\n                           <ul class="subscription_feature">\n                              ' +
                                   e.features.join("") +
-                                  '\n                          </ul>\n                          <div class="subscription_price">\n                            <span class="subscription_price_old">*</span>\n                            <span class="subscription_price_current">*</span>\n                          </div>\n                        </div>\n                         <div class="subscription_footer">\n                             <a class="mbf_button plan_buy_buttton" data-plan-id="' +
+                                  '\n                          </ul>\n                          <div class="subscription_price">\n                            <span class="subscription_price_old">*</span>\n                            <span class="subscription_price_current">*</span>\n                          </div>\n                        </div>\n                         <div class="subscription_footer">\n                             <a href="javascript:void(0)" class="mbf_button plan_buy_buttton" data-plan-id="' +
                                   e.id +
-                                  '" target="_blank">buy</a>\n                        </div>\n \n                    </li>'
+                                  '">buy</a>\n                        </div>\n \n                    </li>'
                               ) +
                               '\n         </ul>\n        <button class="carousel-btn right-btn">→</button>\n</div>\n\n    \x3c!-- End - Modal content --\x3e\n  </div>\n</div>\n ';
                             document.body.insertAdjacentHTML("beforeend", c);
