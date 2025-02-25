@@ -735,12 +735,17 @@ document.addEventListener("click", function (event) {
 
 
 function plan_buy(plan_id) {
+  var encoded_mbf_data = localStorage.getItem("mbf_data")
+  var mbf_data = JSON.parse(atob(encoded_mbf_data));
+  var phone = mbf_data.phone;
+  var unique_id = mbf_data.unique_id;
+
   fetch("https://2way.in/api/extension/plan_buy.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({ plan_id: plan_id }),
+    body: new URLSearchParams({ plan_id: plan_id,phone: phone, unique_id: unique_id }),
   })
     .then(response => response.json())
     .then(data => {
