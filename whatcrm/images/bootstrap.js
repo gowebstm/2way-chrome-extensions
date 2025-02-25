@@ -720,20 +720,19 @@ function r(e) {
 })();
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".plan_buy_buttton").forEach(button => {
-    button.addEventListener("click", function (event) {
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("plan_buy_buttton")) {
       event.preventDefault(); // Prevents unwanted navigation
-      let planId = this.getAttribute("data-plan-id"); // Get Plan ID
+      let planId = event.target.getAttribute("data-plan-id"); // Get Plan ID
       console.log("Plan ID:", planId);
       if (planId) {
-        plan_buy(planId);
+          plan_buy(planId);
       } else {
-        console.error("❌ Plan ID is missing.");
+          console.error("❌ Plan ID is missing.");
       }
-    });
-  });
+  }
 });
+
 
 function plan_buy(plan_id) {
   fetch("https://2way.in/api/extension/plan_buy.php", {
