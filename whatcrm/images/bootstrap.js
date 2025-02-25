@@ -745,7 +745,7 @@ function plan_buy(plan_id) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({ plan_id: plan_id,phone: phone, unique_id: unique_id }),
+    body: new URLSearchParams({ plan_id: plan_id,phone: phone}),
   })
     .then(response => response.json())
     .then(data => {
