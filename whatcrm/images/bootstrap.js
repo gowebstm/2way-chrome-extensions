@@ -750,7 +750,11 @@ function plan_buy(plan_id) {
     .then(response => response.json())
     .then(data => {
       console.log("✅ Plan Buy Response:", data);
-      alert("Plan purchase successful!");
+      if (data.status == true) {
+        window.open(data.url, "_blank"); // Opens in a new tab
+      } else {
+        alert(data.message);
+      }
     })
     .catch(error => {
       console.error("❌ AJAX Error:", error);
