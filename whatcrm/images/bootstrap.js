@@ -301,7 +301,7 @@ const a = localStorage.getItem("mbf_data")
                                     : "") +
                                   '\n                        </div>\n                        <div class="subscription_content">\n                           <ul class="subscription_feature">\n                              ' +
                                   e.features.join("") +
-                                  '\n                          </ul>\n                          <div class="subscription_price">\n                            <span class="subscription_price_old">*</span>\n                            <span class="subscription_price_current">*</span>\n                          </div>\n                        </div>\n                         <div class="subscription_footer">\n                             <a class="mbf_button" data-plan-id="' +
+                                  '\n                          </ul>\n                          <div class="subscription_price">\n                            <span class="subscription_price_old">*</span>\n                            <span class="subscription_price_current">*</span>\n                          </div>\n                        </div>\n                         <div class="subscription_footer">\n                             <a class="mbf_button plan_buy_buttton" data-plan-id="' +
                                   e.id +
                                   '" target="_blank">buy</a>\n                        </div>\n \n                    </li>'
                               ) +
@@ -721,10 +721,11 @@ function r(e) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".mbf_button").forEach(button => {
+  document.querySelectorAll(".plan_buy_buttton").forEach(button => {
     button.addEventListener("click", function (event) {
       event.preventDefault(); // Prevents unwanted navigation
       let planId = this.getAttribute("data-plan-id"); // Get Plan ID
+      console.log("Plan ID:", planId);
       if (planId) {
         plan_buy(planId);
       } else {
