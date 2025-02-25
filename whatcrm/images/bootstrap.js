@@ -288,30 +288,24 @@ const a = localStorage.getItem("mbf_data")
                         !1 === o
                           ? (function () {
                             let c =
-                              '\n<div id="modalPrice" class="modal">\n\n  <div class="modal-content">\n    <button class="close"></button>\n    \x3c!-- Start - Modal content --\x3e\n  \n    <h1 class="modal-title">Choose your Plan</h1>\n <div class="modal-description">\n If you have a license, click here to Enter your Key: <a href="#" class="open-insert-key">Insert License key</a>\n  </div>\n\n  <div class="toggle-price">\n    <input type="checkbox" id="toggle" class="toggle-checkbox" />\n    <label for="toggle" class="toggle-container">\n      <div class="toggle-label monthly active">Monthly Plan</div>   \n      <div class="toggle-label yearly">Yearly Plan</div>\n    </label>\n  </div>\n\n  <div class="carousel-container">\n  <button class="carousel-btn left-btn">←</button>\n  <ul>\n        ' +
-                              e.table_price
-                                .map(
-                                  (e) =>
-                                    '<li class="subscription">\n' +
-                                    '   <div class="subscription_header">\n' +
-                                    '       <h2 class="subscription_header_title">' + e.title + '</h2>\n' +
-                                    '   </div>\n' +
-                                    '   <div class="subscription_content">\n' +
-                                    '       <ul class="subscription_feature">\n' + e.features.join("") + '</ul>\n' +
-                                    '       <div class="subscription_price">\n' +
-                                    '           <span class="subscription_price_old">*</span>\n' +
-                                    '           <span class="subscription_price_current" data-plan="monthly">' + e.monthly_price + '</span>\n' +
-                                    '           <span class="subscription_price_current hidden" data-plan="yearly">' + e.yearly_price + '</span>\n' +
-                                    '       </div>\n' +
-                                    '   </div>\n' +
-                                    '   <div class="subscription_footer">\n' +
-                                    '       <a class="mbf_button" href="' + e.url + '" target="_blank">buy</a>\n' +
-                                    '   </div>\n' +
-                                    '</li>\n'
-                                )
-                                .join("") + 
+                              '\n<div id="modalPrice" class="modal">\n\n  <div class="modal-content">\n    <button class="close"></button>\n    \x3c!-- Start - Modal content --\x3e\n  \n    <h1 class="modal-title">Choose your Plan</h1>\n <div class="modal-description">\n If you have a license, click here to Enter your Key: <a href="#" class="open-insert-key">Insert License key</a>\n  </div>\n\n  <div class="toggle-price">\n    <input type="checkbox" id="toggle" class="toggle-checkbox" />\n    <label for="toggle" class=\'toggle-container\'>\n      <div>Monthly Plan</div>   \n      <div>Yearly Plan</div>\n    </label>\n  </div>\n\n \n\n\n  <div class="carousel-container">\n  <button class="carousel-btn left-btn">←</button>\n  <ul>\n        ' +
+                              e.table_price.map(
+                                (e) =>
+                                  '<li class="subscription"> \n                  \n                        <div class="subscription_header">\n                          <h2 class="subscription_header_title">' +
+                                  e.title +
+                                  "</h2>\n                    " +
+                                  ("-" === e.description
+                                    ? '<div class="subscription_header_description">' +
+                                    e.description +
+                                    "</div>"
+                                    : "") +
+                                  '\n                        </div>\n                        <div class="subscription_content">\n                           <ul class="subscription_feature">\n                              ' +
+                                  e.features.join("") +
+                                  '\n                          </ul>\n                          <div class="subscription_price">\n                            <span class="subscription_price_old">*</span>\n                            <span class="subscription_price_current">*</span>\n                          </div>\n                        </div>\n                         <div class="subscription_footer">\n                             <a class="mbf_button" href="' +
+                                  e.url +
+                                  '" target="_blank">buy</a>\n                        </div>\n \n                    </li>'
+                              ) +
                               '\n         </ul>\n        <button class="carousel-btn right-btn">→</button>\n</div>\n\n    \x3c!-- End - Modal content --\x3e\n  </div>\n</div>\n ';
-                          
                             document.body.insertAdjacentHTML("beforeend", c);
                             var a = document.getElementById("modalPrice"),
                               i = a.querySelector(".close");
@@ -320,73 +314,101 @@ const a = localStorage.getItem("mbf_data")
                                 (a.style.display = "none"), a.remove();
                               }),
                               (window.onclick = function (e) {
-                                e.target == a && ((a.style.display = "none"), a.remove());
+                                e.target == a &&
+                                  ((a.style.display = "none"), a.remove());
                               });
-                          
-                            const s = document.querySelector(".carousel-container ul"),
-                              r = document.querySelector(".carousel-container .left-btn"),
-                              d = document.querySelector(".carousel-container .right-btn"),
-                              u = document.querySelectorAll(".carousel-container  li.subscription"),
+                            const s = document.querySelector(
+                              ".carousel-container ul"
+                            ),
+                              r = document.querySelector(
+                                ".carousel-container .left-btn"
+                              ),
+                              d = document.querySelector(
+                                ".carousel-container .right-btn"
+                              ),
+                              u = document.querySelectorAll(
+                                ".carousel-container  li.subscription"
+                              ),
                               m = document.querySelector(".toggle-price input"),
                               p = document.querySelector(".open-insert-key");
-                          
                             function b() {
                               const e = u[0].clientWidth,
                                 t = s.scrollLeft,
                                 n = Math.round(t / e);
                               return console.log("Índice actual:", n), n;
                             }
-                          
                             function y() {
                               const t = b(),
-                                n = document.querySelector(".carousel-container ul").children[t];
+                                n = document.querySelector(
+                                  ".carousel-container  ul"
+                                ).children[t];
                               let o = e.table_price[b()];
                               0 === o.variations.length
-                                ? (document.querySelector(".toggle-price").classList.add("disabled"),
+                                ? (document
+                                  .querySelector(".toggle-price")
+                                  .classList.add("disabled"),
                                   null === o.old_price
-                                    ? ((n.querySelector(".subscription_price_old").style.display = "none"),
-                                      (n.querySelector(".subscription_price_current").innerHTML = o.regular_price))
-                                    : ((n.querySelector(".subscription_price_old").style.display = "inline"),
-                                      (n.querySelector(".subscription_price_current").style.display = "inline"),
-                                      (n.querySelector(".subscription_price_old").innerHTML = o.old_price),
-                                      (n.querySelector(".subscription_price_current").innerHTML = o.regular_price)))
-                                : (document.querySelector(".toggle-price").classList.remove("disabled"),
+                                    ? ((n.querySelector(
+                                      ".subscription_price_old"
+                                    ).style.display = "none"),
+                                      (n.querySelector(
+                                        ".subscription_price_current"
+                                      ).innerHTML = o.regular_price))
+                                    : ((n.querySelector(
+                                      ".subscription_price_old"
+                                    ).style.display = "inline"),
+                                      (n.querySelector(
+                                        ".subscription_price_current"
+                                      ).style.display = "inline"),
+                                      (n.querySelector(
+                                        ".subscription_price_old"
+                                      ).innerHTML = o.old_price),
+                                      (n.querySelector(
+                                        ".subscription_price_current"
+                                      ).innerHTML = o.regular_price)))
+                                : (document
+                                  .querySelector(".toggle-price")
+                                  .classList.remove("disabled"),
                                   m.checked
                                     ? null === o.variations[1].old_price
-                                      ? ((n.querySelector(".subscription_price_old").style.display = "none"),
-                                        (n.querySelector(".subscription_price_current").innerHTML = o.variations[1].regular_price))
-                                      : ((n.querySelector(".subscription_price_old").style.display = "inline"),
-                                        (n.querySelector(".subscription_price_old").innerHTML = o.variations[1].old_price),
-                                        (n.querySelector(".subscription_price_current").innerHTML = o.variations[1].regular_price))
+                                      ? ((n.querySelector(
+                                        ".subscription_price_old"
+                                      ).style.display = "none"),
+                                        (n.querySelector(
+                                          ".subscription_price_current"
+                                        ).innerHTML =
+                                          o.variations[1].regular_price))
+                                      : ((n.querySelector(
+                                        ".subscription_price_old"
+                                      ).style.display = "inline"),
+                                        (n.querySelector(
+                                          ".subscription_price_old"
+                                        ).innerHTML =
+                                          o.variations[1].old_price),
+                                        (n.querySelector(
+                                          ".subscription_price_current"
+                                        ).innerHTML =
+                                          o.variations[1].regular_price))
                                     : null === o.variations[0].old_price
-                                    ? ((n.querySelector(".subscription_price_old").style.display = "none"),
-                                      (n.querySelector(".subscription_price_current").innerHTML = o.variations[0].regular_price))
-                                    : ((n.querySelector(".subscription_price_old").style.display = "inline"),
-                                      (n.querySelector(".subscription_price_old").innerHTML = o.variations[0].old_price),
-                                      (n.querySelector(".subscription_price_current").innerHTML = o.variations[0].regular_price)));
+                                      ? ((n.querySelector(
+                                        ".subscription_price_old"
+                                      ).style.display = "none"),
+                                        (n.querySelector(
+                                          ".subscription_price_current"
+                                        ).innerHTML =
+                                          o.variations[0].regular_price))
+                                      : ((n.querySelector(
+                                        ".subscription_price_old"
+                                      ).style.display = "inline"),
+                                        (n.querySelector(
+                                          ".subscription_price_old"
+                                        ).innerHTML =
+                                          o.variations[0].old_price),
+                                        (n.querySelector(
+                                          ".subscription_price_current"
+                                        ).innerHTML =
+                                          o.variations[0].regular_price)));
                             }
-                          
-                            // Add event listener for toggle switch
-                            m.addEventListener("change", function () {
-                              const toggleLabels = document.querySelectorAll(".toggle-label");
-                              const monthlyPrices = document.querySelectorAll('.subscription_price_current[data-plan="monthly"]');
-                              const yearlyPrices = document.querySelectorAll('.subscription_price_current[data-plan="yearly"]');
-                          
-                              if (m.checked) {
-                                // Yearly Plan selected
-                                toggleLabels[0].classList.remove("active");
-                                toggleLabels[1].classList.add("active");
-                                monthlyPrices.forEach((price) => price.classList.add("hidden"));
-                                yearlyPrices.forEach((price) => price.classList.remove("hidden"));
-                              } else {
-                                // Monthly Plan selected
-                                toggleLabels[1].classList.remove("active");
-                                toggleLabels[0].classList.add("active");
-                                yearlyPrices.forEach((price) => price.classList.add("hidden"));
-                                monthlyPrices.forEach((price) => price.classList.remove("hidden"));
-                              }
-                            });
-                          
                             r.addEventListener("click", () => {
                               (s.scrollLeft -= s.clientWidth),
                                 setTimeout(() => {
@@ -399,9 +421,106 @@ const a = localStorage.getItem("mbf_data")
                                     y();
                                   }, 100);
                               }),
+                              m.addEventListener("change", function () {
+                                y();
+                              }),
+                              p.addEventListener("click", (e) => {
+                                e.preventDefault(),
+                                  (a.style.display = "none"),
+                                  a.remove(),
+                                  (function () {
+                                    let e =
+                                      '\n<div id="modalPrice" class="modal">\n\n  <div class="modal-content">\n    <button class="close"></button>\n    \x3c!-- Start - Modal content --\x3e\n  \n    <h1 class="modal-title">You must have Valid & Active License Key</h1>\n    <div class="modal-description">\n      Enter your license key & click on Activate to Activate your License Key.\n    </div>\n\n    <div class="toggle-price">\n        <input type="text" class="mbf_input_text" style="margin-bottom:20px;"/>\n        <div class="mbf_button"  >Activate Now</div>\n    </div>\n\n    \x3c!-- End - Modal content --\x3e\n  </div>\n</div>\n ';
+                                    document.body.insertAdjacentHTML(
+                                      "beforeend",
+                                      e
+                                    );
+                                    var c =
+                                      document.getElementById("modalPrice"),
+                                      a = c.querySelector(".close");
+                                    (c.style.display = "flex"),
+                                      (a.onclick = function () {
+                                        (c.style.display = "none"), c.remove();
+                                      }),
+                                      (window.onclick = function (e) {
+                                        e.target == c &&
+                                          ((c.style.display = "none"),
+                                            c.remove());
+                                      });
+                                    const i =
+                                      document.querySelector(".mbf_input_text");
+                                    document
+                                      .querySelector(".mbf_button")
+                                      .addEventListener("click", async () => {
+                                        if ("" === i.value)
+                                          alert("License Blank");
+                                        else {
+                                          c.classList.add("loading");
+                                          const e = await l(
+                                            t.unique_id,
+                                            t.phone,
+                                            i.value
+                                          );
+                                          if (e.success) {
+                                            c.classList.remove("loading");
+                                            const t = {
+                                              type: "ON_FETCH_REMOTE_DATA",
+                                              response: "",
+                                              extraData: {},
+                                            };
+                                            (t.extraData.type =
+                                              "validate_device"),
+                                              (t.extraData.mbf = !0),
+                                              window.postMessage(t, "*"),
+                                              (c.style.display = "none"),
+                                              c.remove(),
+                                              (o = !0),
+                                              (n = e.data),
+                                              (function (e) {
+                                                const t = "mbf_data";
+                                                function n(e) {
+                                                  return btoa(
+                                                    JSON.stringify(e)
+                                                  );
+                                                }
+                                                function o(e) {
+                                                  return JSON.parse(atob(e));
+                                                }
+                                                let c = null;
+                                                try {
+                                                  const e =
+                                                    localStorage.getItem(t);
+                                                  c = e ? o(e) : null;
+                                                } catch (e) { }
+                                                c
+                                                  ? (c.license = e)
+                                                  : (c = { license: e });
+                                                try {
+                                                  localStorage.setItem(t, n(c));
+                                                } catch (e) { }
+                                              })(i.value);
+                                            const a =
+                                              "Hello " +
+                                              n.userDeviceData.device_data
+                                                .skd_wa_no +
+                                              ', your license on CRM from the plan "' +
+                                              n.userDeviceData.plan_type +
+                                              '" Is Active Now. Your next payment is scheduled for ' +
+                                              n.userDeviceData.validate
+                                                .end_date +
+                                              ". Thank you for Choosing CRM! Visit https://www.google.com// to checkout Our Other Serivices! ";
+                                            alert(a);
+                                          } else
+                                            c.classList.remove("loading"),
+                                              (i.value = ""),
+                                              i.focus(),
+                                              alert(e.message);
+                                        }
+                                      });
+                                  })();
+                              }),
                               y();
                           })()
-                          
                           : document
                             .querySelector(
                               ".main_toolbar > .right_buttons-side > div > div > .ant-space-item:nth-child(" +
