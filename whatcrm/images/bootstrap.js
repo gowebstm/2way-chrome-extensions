@@ -753,7 +753,11 @@ function plan_buy(plan_id) {
       if (data.status == true) {
         window.open(data.url, "_blank"); // Opens in a new tab
       } else {
-        alert(data.massage);
+        var message = data.massage;
+        if(!message){
+          message = data.message;
+        }
+        alert(message);
       }
     })
     .catch(error => {
