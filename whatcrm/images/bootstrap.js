@@ -770,3 +770,45 @@ function plan_buy(plan_id) {
     });
 }
 
+function checkPlanStatus() {
+  var txnid = localStorage.getItem("txn_id");
+  var license = localStorage.getItem("license");
+
+  if (!txnid || !license) {
+    console.log("⏹️ No active transaction found. Stopping API calls.");
+    return; // Stop execution if txn_id or license is missing
+  }
+
+  function hitApi() {
+    fetch("https://2way.in/api/extension/check_plan_status.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({ txnid: txnid, license: license }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("🔄 API Response:", data);
+        if (data.status === true) {          
+          // Remove txn_id and license from localStorage
+          localStorage.removeItem("txn_id");
+          localStorage.removeItem("license");
+
+          // Stop further API calls
+          clearInterval(apiInterval);
+        }
+      })
+      .catch(error => {
+        console.error("❌ API Error:", error);
+      });
+  }
+
+  // Hit API every second until success response
+  var apiInterval = setInterval(hitApi, 1000);
+}
+
+// Call this function to start checking
+checkPlanStatus();
+
+
