@@ -734,8 +734,56 @@ document.addEventListener("click", function (event) {
 });
 
 
+// function plan_buy(plan_id) {
+//   var encoded_mbf_data = localStorage.getItem("mbf_data")
+//   var mbf_data = JSON.parse(atob(encoded_mbf_data));
+//   var phone = mbf_data.phone;
+//   var unique_id = mbf_data.unique_id;
+
+//   fetch("https://2way.in/api/extension/plan_buy.php", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//     body: new URLSearchParams({ plan_id: plan_id,phone: phone}),
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       console.log("✅ Plan Buy Response:", data);
+//       if (data.status == true) {
+//         var txnid = data.data.txnid;
+//         var license = data.data.license;
+//         window.open(data.data.url, "_blank"); // Opens in a new tab
+//       } else {
+//         var message = data.massage;
+//         if(!message){
+//           message = data.message;
+//         }
+//         alert(message);
+//       }
+//     })
+//     .catch(error => {
+//       console.error("❌ AJAX Error:", error);
+//       alert("Error purchasing plan. Please try again.");
+//     });
+// }
+
+
+// Function to dynamically load SweetAlert2 script if not already included
+function loadSweetAlert(callback) {
+  if (!window.Swal) {
+    var script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
+    script.onload = callback; // Run the callback function once SweetAlert2 is loaded
+    document.head.appendChild(script);
+  } else {
+    callback();
+  }
+}
+
+
 function plan_buy(plan_id) {
-  var encoded_mbf_data = localStorage.getItem("mbf_data")
+  var encoded_mbf_data = localStorage.getItem("mbf_data");
   var mbf_data = JSON.parse(atob(encoded_mbf_data));
   var phone = mbf_data.phone;
   var unique_id = mbf_data.unique_id;
@@ -745,7 +793,7 @@ function plan_buy(plan_id) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({ plan_id: plan_id,phone: phone}),
+    body: new URLSearchParams({ plan_id: plan_id, phone: phone }),
   })
     .then(response => response.json())
     .then(data => {
@@ -753,18 +801,43 @@ function plan_buy(plan_id) {
       if (data.status == true) {
         var txnid = data.data.txnid;
         var license = data.data.license;
-        window.open(data.data.url, "_blank"); // Opens in a new tab
+
+        // Open payment link in a new tab
+        window.open(data.data.url, "_blank");
+
+        // Show SweetAlert2 with license key & copy button
+        loadSweetAlert(() => {
+          Swal.fire({
+            title: "Success!",
+            html: `<p>Your transaction ID: <strong>${txnid}</strong></p>
+                   <p>Your License Key: <strong id="licenseKey">${license}</strong> <button onclick="copyLicenseKey()" class="swal2-confirm swal2-styled">Copy</button></p>`,
+            icon: "success",
+            showConfirmButton: false,
+          });
+        });
+
       } else {
-        var message = data.massage;
-        if(!message){
-          message = data.message;
-        }
-        alert(message);
+        var message = data.massage || data.message || "An error occurred.";
+        loadSweetAlert(() => {
+          Swal.fire("Purchase Failed", message, "error");
+        });
       }
     })
     .catch(error => {
       console.error("❌ AJAX Error:", error);
-      alert("Error purchasing plan. Please try again.");
+      loadSweetAlert(() => {
+        Swal.fire("Error", "Error purchasing plan. Please try again.", "error");
+      });
     });
+}
+
+// Function to copy the license key to clipboard
+function copyLicenseKey() {
+  let licenseText = document.getElementById("licenseKey").textContent;
+  navigator.clipboard.writeText(licenseText).then(() => {
+    Swal.fire("Copied!", "License Key copied to clipboard.", "success");
+  }).catch(err => {
+    alert("Failed to copy license key.");
+  });
 }
 
