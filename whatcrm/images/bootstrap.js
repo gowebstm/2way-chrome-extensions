@@ -769,19 +769,6 @@ document.addEventListener("click", function (event) {
 // }
 
 
-// Function to dynamically load SweetAlert2 script if not already included
-function loadSweetAlert(callback) {
-  if (!window.Swal) {
-    var script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
-    script.onload = callback; // Run the callback function once SweetAlert2 is loaded
-    document.head.appendChild(script);
-  } else {
-    callback();
-  }
-}
-
-
 function plan_buy(plan_id) {
   var encoded_mbf_data = localStorage.getItem("mbf_data");
   var mbf_data = JSON.parse(atob(encoded_mbf_data));
@@ -798,46 +785,29 @@ function plan_buy(plan_id) {
     .then(response => response.json())
     .then(data => {
       console.log("✅ Plan Buy Response:", data);
-      if (data.status == true) {
+      if (data.status === true) {
         var txnid = data.data.txnid;
         var license = data.data.license;
 
         // Open payment link in a new tab
         window.open(data.data.url, "_blank");
 
-        // Show SweetAlert2 with license key & copy button
-        loadSweetAlert(() => {
-          Swal.fire({
-            title: "Success!",
-            html: `<p>Your transaction ID: <strong>${txnid}</strong></p>
-                   <p>Your License Key: <strong id="licenseKey">${license}</strong> <button onclick="copyLicenseKey()" class="swal2-confirm swal2-styled">Copy</button></p>`,
-            icon: "success",
-            showConfirmButton: false,
-          });
-        });
-
+        // Use prompt() to let users copy the license key
+        let copiedText = prompt(
+          "Plan Purchased Successfully! Copy the License Key below:",
+          license
+        );
+        if (copiedText !== null) {
+          alert("License Key copied manually: " + license);
+        }
       } else {
         var message = data.massage || data.message || "An error occurred.";
-        loadSweetAlert(() => {
-          Swal.fire("Purchase Failed", message, "error");
-        });
+        alert("Purchase Failed: " + message);
       }
     })
     .catch(error => {
       console.error("❌ AJAX Error:", error);
-      loadSweetAlert(() => {
-        Swal.fire("Error", "Error purchasing plan. Please try again.", "error");
-      });
+      alert("Error purchasing plan. Please try again.");
     });
-}
-
-// Function to copy the license key to clipboard
-function copyLicenseKey() {
-  let licenseText = document.getElementById("licenseKey").textContent;
-  navigator.clipboard.writeText(licenseText).then(() => {
-    Swal.fire("Copied!", "License Key copied to clipboard.", "success");
-  }).catch(err => {
-    alert("Failed to copy license key.");
-  });
 }
 
