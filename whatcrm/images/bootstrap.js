@@ -734,43 +734,8 @@ document.addEventListener("click", function (event) {
 });
 
 
-// function plan_buy(plan_id) {
-//   var encoded_mbf_data = localStorage.getItem("mbf_data")
-//   var mbf_data = JSON.parse(atob(encoded_mbf_data));
-//   var phone = mbf_data.phone;
-//   var unique_id = mbf_data.unique_id;
-
-//   fetch("https://2way.in/api/extension/plan_buy.php", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//     },
-//     body: new URLSearchParams({ plan_id: plan_id,phone: phone}),
-//   })
-//     .then(response => response.json())
-//     .then(data => {
-//       console.log("✅ Plan Buy Response:", data);
-//       if (data.status == true) {
-//         var txnid = data.data.txnid;
-//         var license = data.data.license;
-//         window.open(data.data.url, "_blank"); // Opens in a new tab
-//       } else {
-//         var message = data.massage;
-//         if(!message){
-//           message = data.message;
-//         }
-//         alert(message);
-//       }
-//     })
-//     .catch(error => {
-//       console.error("❌ AJAX Error:", error);
-//       alert("Error purchasing plan. Please try again.");
-//     });
-// }
-
-
 function plan_buy(plan_id) {
-  var encoded_mbf_data = localStorage.getItem("mbf_data");
+  var encoded_mbf_data = localStorage.getItem("mbf_data")
   var mbf_data = JSON.parse(atob(encoded_mbf_data));
   var phone = mbf_data.phone;
   var unique_id = mbf_data.unique_id;
@@ -780,29 +745,21 @@ function plan_buy(plan_id) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({ plan_id: plan_id, phone: phone }),
+    body: new URLSearchParams({ plan_id: plan_id,phone: phone}),
   })
     .then(response => response.json())
     .then(data => {
       console.log("✅ Plan Buy Response:", data);
-      if (data.status === true) {
+      if (data.status == true) {
         var txnid = data.data.txnid;
         var license = data.data.license;
-
-        // Open payment link in a new tab
-        window.open(data.data.url, "_blank");
-
-        // Use prompt() to let users copy the license key
-        let copiedText = prompt(
-          "Plan Purchased Successfully! Copy the License Key below:",
-          license
-        );
-        if (copiedText !== null) {
-          alert("License Key copied manually: " + license);
-        }
+        window.open(data.data.url, "_blank"); // Opens in a new tab
       } else {
-        var message = data.massage || data.message || "An error occurred.";
-        alert("Purchase Failed: " + message);
+        var message = data.massage;
+        if(!message){
+          message = data.message;
+        }
+        alert(message);
       }
     })
     .catch(error => {
