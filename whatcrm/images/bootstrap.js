@@ -751,7 +751,9 @@ function plan_buy(plan_id) {
     .then(data => {
       console.log("✅ Plan Buy Response:", data);
       if (data.status == true) {
-        window.open(data.url, "_blank"); // Opens in a new tab
+        var txnid = data.data.txnid;
+        var license = data.data.license;
+        window.open(data.data.url, "_blank"); // Opens in a new tab
       } else {
         var message = data.massage;
         if(!message){
