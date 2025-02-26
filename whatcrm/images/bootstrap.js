@@ -745,7 +745,7 @@ function plan_buy(plan_id) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({ plan_id: plan_id,phone: phone}),
+    body: new URLSearchParams({plan_id: plan_id,phone: phone}),
   })
     .then(response => response.json())
     .then(data => {
@@ -753,6 +753,8 @@ function plan_buy(plan_id) {
       if (data.status == true) {
         var txnid = data.data.txnid;
         var license = data.data.license;
+        localStorage.setItem("txn_id", txnid);
+        localStorage.setItem("license", license);
         window.open(data.data.url, "_blank"); // Opens in a new tab
       } else {
         var message = data.massage;
