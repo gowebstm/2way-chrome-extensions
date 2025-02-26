@@ -808,7 +808,17 @@ function checkPlanStatus() {
   var apiInterval = setInterval(hitApi, 1000);
 }
 
-// Call this function to start checking
-checkPlanStatus();
+// Listen for changes in localStorage and start checking when txn_id is set
+window.addEventListener("storage", function(event) {
+  if (event.key === "txn_id" && event.newValue) {
+    checkPlanStatus(); // Start checking only when txn_id is added
+  }
+});
+
+// Check on page load if txn_id already exists
+if (localStorage.getItem("txn_id")) {
+  checkPlanStatus();
+}
+
 
 
