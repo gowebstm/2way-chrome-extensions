@@ -805,20 +805,30 @@ function checkPlanStatus() {
   }
 
   // Hit API every second until success response
-  var apiInterval = setInterval(hitApi, 1000);
+  apiInterval = setInterval(hitApi, 1000);
 }
 
-// Listen for changes in localStorage and start checking when txn_id is set
-window.addEventListener("storage", function(event) {
-  if (event.key === "txn_id" && event.newValue) {
-    checkPlanStatus(); // Start checking only when txn_id is added
-  }
-});
+// ✅ Watch for txn_id changes and start checking immediately
+function watchTxnId() {
+  let lastTxnId = localStorage.getItem("txn_id");
 
-// Check on page load if txn_id already exists
+  setInterval(() => {
+    let currentTxnId = localStorage.getItem("txn_id");
+
+    if (currentTxnId && currentTxnId !== lastTxnId) {
+      console.log("🟢 txn_id detected. Starting API calls...");
+      checkPlanStatus(); // Start checking when txn_id is set
+      lastTxnId = currentTxnId;
+    }
+  }, 500); // Check every 500ms for txn_id updates
+}
+
+// ✅ Start checking immediately if txn_id already exists
 if (localStorage.getItem("txn_id")) {
   checkPlanStatus();
 }
 
+// ✅ Start watching for txn_id changes
+watchTxnId();
 
 
