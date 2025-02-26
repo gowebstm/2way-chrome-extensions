@@ -795,17 +795,23 @@ function checkPlanStatus() {
           localStorage.removeItem("txn_id");
           localStorage.removeItem("license");
 
-          // Stop further API calls
-          clearInterval(apiInterval);
+          console.log("✅ Payment success. Stopping API calls.");
+          return; // Stop further requests
         }
+
+        // Wait for the previous request to finish before hitting again
+        setTimeout(hitApi, 2000); // Wait 1 second before making the next request
       })
       .catch(error => {
         console.error("❌ API Error:", error);
+
+        // Retry after 1 second even if there is an error
+        setTimeout(hitApi, 1000);
       });
   }
 
-  // Hit API every second until success response
-  apiInterval = setInterval(hitApi, 1000);
+  // Start the first API call
+  hitApi();
 }
 
 // ✅ Watch for txn_id changes and start checking immediately
@@ -830,5 +836,6 @@ if (localStorage.getItem("txn_id")) {
 
 // ✅ Start watching for txn_id changes
 watchTxnId();
+
 
 
