@@ -508,7 +508,7 @@ const a = localStorage.getItem("mbf_data")
                                               '" Is Active Now. Your next payment is scheduled for ' +
                                               n.userDeviceData.validate
                                                 .end_date +
-                                              ". Thank you for Choosing CRM! Visit https://www.google.com// to checkout Our Other Serivices! ";
+                                              ". Thank you for Choosing CRM! Visit https://2way.in to checkout Our Other Serivices! ";
                                             alert(a);
                                           } else
                                             c.classList.remove("loading"),
@@ -794,6 +794,7 @@ function checkPlanStatus() {
           // Remove txn_id and license from localStorage
           localStorage.removeItem("txn_id");
           localStorage.removeItem("license");
+          alert(data.message);
 
           console.log("✅ Payment success. Stopping API calls.");
           return; // Stop further requests
