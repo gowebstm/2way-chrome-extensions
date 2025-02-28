@@ -430,7 +430,7 @@ const a = localStorage.getItem("mbf_data")
                                   a.remove(),
                                   (function () {
                                     let e =
-                                      '\n<div id="modalPrice" class="modal">\n\n  <div class="modal-content">\n    <button class="close"></button>\n    \x3c!-- Start - Modal content --\x3e\n  \n    <h1 class="modal-title">You must have Valid & Active License Key</h1>\n    <div class="modal-description">\n      Enter your license key & click on Activate to Activate your License Key.\n    </div>\n\n    <div class="toggle-price">\n        <input type="text" class="mbf_input_text" style="margin-bottom:20px;"/>\n        <div class="mbf_button"  >Activate Now</div>\n    </div>\n\n    \x3c!-- End - Modal content --\x3e\n  </div>\n</div>\n ';
+                                      '\n<div id="modalPrice" class="modal">\n\n  <div class="modal-content">\n    <button class="close"></button>\n    \x3c!-- Start - Modal content --\x3e\n  \n    <h1 class="modal-title">You must have Valid & Active License Key</h1>\n    <div class="modal-description">\n      Enter your license key & click on Activate to Activate your License Key.\n    </div>\n\n    <div class="toggle-price">\n        <input type="text" id="license-input" class="mbf_input_text" style="margin-bottom:20px;"/>\n        <div id="activate-btn" class="mbf_button">Activate Now</div>\n    </div>\n\n    \x3c!-- End - Modal content --\x3e\n  </div>\n</div>\n ';
                                     document.body.insertAdjacentHTML(
                                       "beforeend",
                                       e
@@ -722,14 +722,14 @@ function r(e) {
 
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("plan_buy_buttton")) {
-      event.preventDefault(); // Prevents unwanted navigation
-      let planId = event.target.getAttribute("data-plan-id"); // Get Plan ID
-      console.log("Plan ID:", planId);
-      if (planId) {
-          plan_buy(planId);
-      } else {
-          console.error("❌ Plan ID is missing.");
-      }
+    event.preventDefault(); // Prevents unwanted navigation
+    let planId = event.target.getAttribute("data-plan-id"); // Get Plan ID
+    console.log("Plan ID:", planId);
+    if (planId) {
+      plan_buy(planId);
+    } else {
+      console.error("❌ Plan ID is missing.");
+    }
   }
 });
 
@@ -745,7 +745,7 @@ function plan_buy(plan_id) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({plan_id: plan_id,phone: phone}),
+    body: new URLSearchParams({ plan_id: plan_id, phone: phone }),
   })
     .then(response => response.json())
     .then(data => {
@@ -758,7 +758,7 @@ function plan_buy(plan_id) {
         window.open(data.data.url, "_blank"); // Opens in a new tab
       } else {
         var message = data.massage;
-        if(!message){
+        if (!message) {
           message = data.message;
         }
         alert(message);
@@ -790,18 +790,34 @@ function checkPlanStatus() {
       .then(response => response.json())
       .then(data => {
         console.log("🔄 API Response:", data);
-        if (data.status === true) {          
+
+        if (data.status === true) {
           // Remove txn_id and license from localStorage
           localStorage.removeItem("txn_id");
           localStorage.removeItem("license");
-          alert(data.message);
 
-          console.log("✅ Payment success. Stopping API calls.");
+          // Get the license key from response
+          var licenseKey = data.data.license;
+
+          // Insert the license key into the input field
+          let licenseInput = document.querySelector("#license-input"); // Adjust this selector to match your input field
+          if (licenseInput) {
+            licenseInput.value = licenseKey;
+            console.log("✅ License Key inserted:", licenseKey);
+          }
+
+          // Simulate clicking the "Activate Now" button
+          let activateButton = document.querySelector("#activate-btn"); // Adjust this selector to match your button
+          if (activateButton) {
+            console.log("🚀 Clicking Activate Now button...");
+            activateButton.click();
+          }
+
           return; // Stop further requests
         }
 
         // Wait for the previous request to finish before hitting again
-        setTimeout(hitApi, 2000); // Wait 1 second before making the next request
+        setTimeout(hitApi, 2000); // Wait 2 seconds before making the next request
       })
       .catch(error => {
         console.error("❌ API Error:", error);
@@ -810,6 +826,7 @@ function checkPlanStatus() {
         setTimeout(hitApi, 1000);
       });
   }
+
 
   // Start the first API call
   hitApi();
