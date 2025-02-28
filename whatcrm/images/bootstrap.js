@@ -798,16 +798,25 @@ function checkPlanStatus() {
 
           // Get the license key from response
           var licenseKey = data.data.license;
+          console.log("✅ License Key:", licenseKey);
+          
 
-          // Insert the license key into the input field
-          let licenseInput = document.querySelector("#license-input"); // Adjust this selector to match your input field
+          // Step 1: Click the "Insert License Key" link
+          let insertKeyLink = document.querySelector(".open-insert-key");
+          if (insertKeyLink) {
+            console.log("📌 Clicking Insert License Key link...");
+            insertKeyLink.click();
+          }
+
+          // Step 2: Insert the license key into the input field
+          let licenseInput = document.querySelector("#license-input");
           if (licenseInput) {
             licenseInput.value = licenseKey;
             console.log("✅ License Key inserted:", licenseKey);
           }
 
-          // Simulate clicking the "Activate Now" button
-          let activateButton = document.querySelector("#activate-btn"); // Adjust this selector to match your button
+          // Step 3: Click the "Activate Now" button
+          let activateButton = document.querySelector("#activate-btn");
           if (activateButton) {
             console.log("🚀 Clicking Activate Now button...");
             activateButton.click();
@@ -826,6 +835,7 @@ function checkPlanStatus() {
         setTimeout(hitApi, 1000);
       });
   }
+
 
 
   // Start the first API call
