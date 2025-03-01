@@ -3,7 +3,8 @@ let e = null,
   n = null,
   o = !1;
 const developmentMode = true;
-let companyDomain = "https://2way.in";
+// Replace with your actual subdomain
+const companyDomain = "https://2way.in";
 
 var c = encodeURI("695b9093-7bfb-11ef-8741-5475513518d7");
 const a = localStorage.getItem("mbf_data")
