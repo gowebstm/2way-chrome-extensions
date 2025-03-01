@@ -143,6 +143,7 @@ const a = localStorage.getItem("mbf_data")
     o.searchParams.append("action", "get_data"),
       o.searchParams.append("phone", t),
       o.searchParams.append("reseller_id", n),
+      o.searchParams.append("company_id", n),
       e && o.searchParams.append("key", e);
     try {
       const e = await fetch(o, { method: "GET" });
