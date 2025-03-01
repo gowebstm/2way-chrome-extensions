@@ -3,6 +3,7 @@ let e = null,
   n = null,
   o = !1;
 const developmentMode = true;
+let companyDomain = "https://2way.in";
 
 var c = encodeURI("695b9093-7bfb-11ef-8741-5475513518d7");
 const a = localStorage.getItem("mbf_data")
@@ -139,7 +140,7 @@ const a = localStorage.getItem("mbf_data")
   })(),
   (async function (e = "", t, n) {
     // const o = new URL("https://whatcrm.xyz/api/panouncement.php");
-    const o = new URL("https://2way.in/api/extension/welcome.php");
+    const o = new URL(`${companyDomain}/api/extension/welcome.php`);
     o.searchParams.append("action", "get_data"),
       o.searchParams.append("phone", t),
       o.searchParams.append("reseller_id", n),
@@ -509,7 +510,7 @@ const a = localStorage.getItem("mbf_data")
                                               '" Is Active Now. Your next payment is scheduled for ' +
                                               n.userDeviceData.validate
                                                 .end_date +
-                                              ". Thank you for Choosing CRM! Visit https://2way.in to checkout Our Other Serivices! ";
+                                              `. Thank you for choosing CRM! Visit ${companyDomain} to check out our other services!`;
                                             alert(a);
                                           } else
                                             c.classList.remove("loading"),
@@ -668,7 +669,7 @@ var s = setInterval(function () {
 }, 50);
 async function l(e, t, n, o) {
   const c =
-    "https://2way.in/api/extension/license.php?" +
+    `${companyDomain}/api/extension/license.php?` +
     new URLSearchParams({
       unique_id: e,
       phone: t,
@@ -741,7 +742,7 @@ function plan_buy(plan_id) {
   var phone = mbf_data.phone;
   var unique_id = mbf_data.unique_id;
 
-  fetch("https://2way.in/api/extension/plan_buy.php", {
+  fetch(`${companyDomain}/api/extension/plan_buy.php`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -781,7 +782,7 @@ function checkPlanStatus() {
   }
 
   function hitApi() {
-    fetch("https://2way.in/api/extension/check_plan_status.php", {
+    fetch(`${companyDomain}/api/extension/check_plan_status.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -800,7 +801,7 @@ function checkPlanStatus() {
           // Get the license key from response
           var licenseKey = data.data.license;
           console.log("✅ License Key:", licenseKey);
-          
+
 
           // Step 1: Click the "Insert License Key" link
           let insertKeyLink = document.querySelector(".open-insert-key");
